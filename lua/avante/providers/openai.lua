@@ -459,7 +459,9 @@ function M:parse_response(ctx, data_stream, _, opts)
         self:add_tool_use_message(ctx, tool_use, "generating", opts)
       else
         local tool_use = ctx.tool_use_list[tool_call.index + 1]
-        if tool_call["function"].arguments == vim.NIL then tool_call["function"].arguments = "" end
+        if tool_call["function"].arguments == vim.NIL or tool_call["function"].arguments == nil then
+          tool_call["function"].arguments = ""
+        end
         tool_use.input_json = tool_use.input_json .. tool_call["function"].arguments
         -- self:add_tool_use_message(ctx, tool_use, "generating", opts)
       end
